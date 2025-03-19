@@ -1,0 +1,5 @@
+C:\Users\SESA812587\Desktop\RedBlackTreeProject\PerformanceTest\obj\Debug\net6.0\PerformanceTest.csproj.AssemblyReference.cache
+C:\Users\SESA812587\Desktop\RedBlackTreeProject\PerformanceTest\obj\Debug\net6.0\PerformanceTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SESA812587\Desktop\RedBlackTreeProject\PerformanceTest\obj\Debug\net6.0\PerformanceTest.AssemblyInfoInputs.cache
+C:\Users\SESA812587\Desktop\RedBlackTreeProject\PerformanceTest\obj\Debug\net6.0\PerformanceTest.AssemblyInfo.cs
+C:\Users\SESA812587\Desktop\RedBlackTreeProject\PerformanceTest\obj\Debug\net6.0\PerformanceTest.csproj.CoreCompileInputs.cache
