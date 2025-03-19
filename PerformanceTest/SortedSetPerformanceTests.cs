@@ -1,17 +1,18 @@
 using System;
+using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
 namespace PerformanceTest
 {
-    public class RedBlackTreePerformanceTests
+    public class SortedSetPerformanceTests
     {
-        private RedBlackTree<int> tree;
+        private SortedSet<int> sortedSet;
 
         [GlobalSetup]
         public void Setup()
         {
-            tree = new RedBlackTree<int>();
+            sortedSet = new SortedSet<int>();
         }
 
         [Benchmark]
@@ -19,7 +20,7 @@ namespace PerformanceTest
         {
             for (int i = 0; i < 10000; i++)
             {
-                tree.Insert(i);
+                sortedSet.Add(i);
             }
         }
 
@@ -28,12 +29,12 @@ namespace PerformanceTest
         {
             for (int i = 0; i < 10000; i++)
             {
-                tree.Insert(i);
+                sortedSet.Add(i);
             }
 
             for (int i = 0; i < 10000; i++)
             {
-                tree.Delete(i);
+                sortedSet.Remove(i);
             }
         }
 
@@ -42,25 +43,13 @@ namespace PerformanceTest
         {
             for (int i = 0; i < 10000; i++)
             {
-                tree.Insert(i);
+                sortedSet.Add(i);
             }
 
             for (int i = 0; i < 10000; i++)
             {
-                tree.Search(i);
+                sortedSet.Contains(i);
             }
-        }
-    }
-
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            // 运行 RedBlackTree 的性能测试
-            BenchmarkRunner.Run<RedBlackTreePerformanceTests>();
-
-            // 运行 SortedSet 的性能测试
-            BenchmarkRunner.Run<SortedSetPerformanceTests>();
         }
     }
 }
