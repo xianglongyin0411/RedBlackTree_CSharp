@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\UnitTest\\UnitTest.csproj": {}
+    "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\UnitTest\\UnitTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\RedBlackTree\\RedBlackTree.csproj": {
+    "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\RedBlackTree\\RedBlackTree.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\RedBlackTree\\RedBlackTree.csproj",
+        "projectUniqueName": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\RedBlackTree\\RedBlackTree.csproj",
         "projectName": "RedBlackTree",
-        "projectPath": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\RedBlackTree\\RedBlackTree.csproj",
+        "projectPath": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\RedBlackTree\\RedBlackTree.csproj",
         "packagesPath": "C:\\Users\\SESA812587\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\RedBlackTree\\obj\\",
+        "outputPath": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\RedBlackTree\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,14 +69,14 @@
         }
       }
     },
-    "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\UnitTest\\UnitTest.csproj": {
+    "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\UnitTest\\UnitTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\UnitTest\\UnitTest.csproj",
+        "projectUniqueName": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\UnitTest\\UnitTest.csproj",
         "projectName": "UnitTest",
-        "projectPath": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\UnitTest\\UnitTest.csproj",
+        "projectPath": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\UnitTest\\UnitTest.csproj",
         "packagesPath": "C:\\Users\\SESA812587\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\UnitTest\\obj\\",
+        "outputPath": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\UnitTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -97,8 +97,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\RedBlackTree\\RedBlackTree.csproj": {
-                "projectPath": "C:\\Users\\SESA812587\\Desktop\\RedBlackTreeProject\\RedBlackTree\\RedBlackTree.csproj"
+              "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\RedBlackTree\\RedBlackTree.csproj": {
+                "projectPath": "C:\\Users\\SESA812587\\Documents\\RedBlackTree\\RedBlackTree\\RedBlackTree.csproj"
               }
             }
           }
