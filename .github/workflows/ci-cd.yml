@@ -1,31 +1,29 @@
-name: CI/CD for RedBlackTreeProject
+name: CI Pipeline
 
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
-    name: Build and Test
+  unit-tests:
+    name: Run Unit Tests
     runs-on: windows-latest
 
     steps:
-      # 检出代码
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
-      # 设置 .NET 环境
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 9.0 # 根据你的项目需要调整版本
+          dotnet-version: '9.0' # 根据您的项目使用的 .NET 版本调整
 
-      # 恢复依赖项
       - name: Restore dependencies
-        run: dotnet restore RedBlackTreeProject.sln
+        run: dotnet restore UnitTest/UnitTest.csproj
 
-      # 构建项目
-      - name: Build solution
-        run: dotnet build RedBlackTreeProject.sln --configuration Release --no-restore
-
-      # 运行单元测试
-      - name: Run unit tests
+      - name: Run Unit Tests
         run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal
