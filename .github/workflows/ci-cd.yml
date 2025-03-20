@@ -1,0 +1,31 @@
+name: CI/CD for RedBlackTreeProject
+
+on: push
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: windows-latest
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      # 设置 .NET 环境
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 9.0 # 根据你的项目需要调整版本
+
+      # 恢复依赖项
+      - name: Restore dependencies
+        run: dotnet restore RedBlackTreeProject.sln
+
+      # 构建项目
+      - name: Build solution
+        run: dotnet build RedBlackTreeProject.sln --configuration Release --no-restore
+
+      # 运行单元测试
+      - name: Run unit tests
+        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal
