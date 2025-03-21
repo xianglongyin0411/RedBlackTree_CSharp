@@ -61,9 +61,6 @@ namespace PerformanceTest
         {
             // 运行 RedBlackTree 的性能测试
             BenchmarkRunner.Run<RedBlackTreePerformanceTests>();
-
-            // 运行 SortedSet 的性能测试
-            BenchmarkRunner.Run<SortedSetPerformanceTests>();
         }
     }
 

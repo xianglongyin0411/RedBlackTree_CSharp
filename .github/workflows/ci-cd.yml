@@ -22,8 +22,16 @@ jobs:
         shell: cmd
 
       - name: Run Unit Tests
-        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal
+        id: unit-tests
+        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "trx;LogFileName=unit-test-results.trx"
         shell: cmd
+
+      - name: Publish Unit Test Results
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: 'UnitTest/unit-test-results.trx'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   performance-tests:
     name: Run Performance Tests
@@ -33,10 +41,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Restors dependencies
+      - name: Restore dependencies
         run: dotnet restore PerformanceTest/PerformanceTest.csproj
         shell: cmd
-        
+
       - name: Run Performance Tests
-        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
+        id: performance-tests
+        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release > PerformanceTest/performance-results.json
         shell: cmd
+
+      - name: Publish Performance Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Performance-Test-Results
+          path: PerformanceTest/performance-results.json
