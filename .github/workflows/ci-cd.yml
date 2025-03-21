@@ -24,3 +24,19 @@ jobs:
       - name: Run Unit Tests
         run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal
         shell: cmd
+
+  performance-tests:
+    name: Run Performance Tests
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Restors dependencies
+        run: dotnet restore PerformanceTest/PerformanceTest.csproj
+        shell: cmd
+        
+      - name: Run Performance Tests
+        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
+        shell: cmd
