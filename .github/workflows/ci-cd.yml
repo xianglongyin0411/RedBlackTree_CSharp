@@ -19,6 +19,8 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore UnitTest/UnitTest.csproj
+        shell: cmd
 
       - name: Run Unit Tests
         run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal
+        shell: cmd
