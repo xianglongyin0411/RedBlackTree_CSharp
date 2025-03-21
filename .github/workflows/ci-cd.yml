@@ -27,7 +27,7 @@ jobs:
 
   performance-tests:
     name: Run Performance Tests
-    runs-on: windows-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
