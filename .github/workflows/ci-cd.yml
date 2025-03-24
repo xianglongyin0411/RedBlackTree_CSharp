@@ -21,14 +21,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('UnitTest/UnitTest.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
       - name: Restore dependencies
         run: dotnet restore UnitTest/UnitTest.csproj
         shell: cmd
@@ -41,7 +33,7 @@ jobs:
         # EnricoMi/publish-unit-test-result-action/windows@283dea176069279a9076e77b548668a8e4f0c31b
         # EnricoMi/publish-unit-test-result-action@283dea176069279a9076e77b548668a8e4f0c31b
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/windows@283dea176069279a9076e77b548668a8e4f0c31b
+        uses: EnricoMi/publish-unit-test-result-action@283dea176069279a9076e77b548668a8e4f0c31b
         if: always()
         with:
           files: |
