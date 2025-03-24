@@ -21,6 +21,10 @@ jobs:
         run: dotnet restore UnitTest/UnitTest.csproj
         shell: cmd
 
+      - name: Install JUnit Test Logger
+        run: dotnet tool install --global JUnitXml.TestLogger
+        shell: cmd
+
       - name: Run Unit Tests
         run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "junit;LogFileName=unit-test-results.xml"
         shell: cmd
