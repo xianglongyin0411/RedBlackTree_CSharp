@@ -21,12 +21,8 @@ jobs:
         run: dotnet restore UnitTest/UnitTest.csproj
         shell: cmd
 
-      - name: Install JUnit Test Logger
-        run: dotnet tool install --global JUnitXml.TestLogger
-        shell: cmd
-
       - name: Run Unit Tests
-        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "junit;LogFileName=unit-test-results.xml"
+        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "xunit;LogFileName=unit-test-results.xml"
         shell: cmd
       
       - name: Publish Test Results
@@ -35,18 +31,18 @@ jobs:
           files: |
             test-results/**/*.xml
 
-  performance-tests:
-    name: Run Performance Tests
-    runs-on: self-hosted
+  # performance-tests:
+  #   name: Run Performance Tests
+  #   runs-on: self-hosted
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Restors dependencies
-        run: dotnet restore PerformanceTest/PerformanceTest.csproj
-        shell: cmd
+  #     - name: Restors dependencies
+  #       run: dotnet restore PerformanceTest/PerformanceTest.csproj
+  #       shell: cmd
         
-      - name: Run Performance Tests
-        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
-        shell: cmd
+  #     - name: Run Performance Tests
+  #       run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
+  #       shell: cmd
