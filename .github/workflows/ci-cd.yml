@@ -26,7 +26,7 @@ jobs:
         shell: cmd
       
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/windows/bash@30eadd5010312f995f0d3b3cff7fe2984f69409e,
+        uses: EnricoMi/publish-unit-test-result-action/windows/bash@283dea176069279a9076e77b548668a8e4f0c31b
         if: always()
         with:
           files: |
