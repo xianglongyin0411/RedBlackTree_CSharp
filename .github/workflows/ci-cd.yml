@@ -26,7 +26,8 @@ jobs:
         shell: cmd
       
       - name: Publish Test Results
-        uses: ./.github/actions/EnricoMi-publish-unit-test-result-action-283dea1
+        uses: EnricoMi/publish-unit-test-result-action/windows/bash@v2
+        if: always()
         with:
           files: |
             test-results/**/*.xml
