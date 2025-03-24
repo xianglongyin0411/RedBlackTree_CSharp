@@ -24,15 +24,9 @@ jobs:
       - name: Run Unit Tests
         run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "junit;LogFileName=unit-test-results.xml"
         shell: cmd
-
-      # - name: Upload Unit Test Results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #    name: Unit-Test-Result
-      #    path: UnitTest/bin/Debug/net9.0/unit-test-result.xml
       
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: EnricoMi/publish-unit-test-result-action@283dea176069279a9076e77b548668a8e4f0c31b
         if: always()
         with:
           files: |
