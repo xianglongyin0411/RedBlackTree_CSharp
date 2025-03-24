@@ -35,7 +35,7 @@ jobs:
   test-report:
     name: Generate Test Report
     needs: unit-tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # dorny/test-reporter@afe6793191b75b608954023a46831a3fe10048d4
       - name: Generate test report
