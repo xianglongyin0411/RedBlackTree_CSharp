@@ -21,12 +21,8 @@ jobs:
         run: dotnet restore UnitTest/UnitTest.csproj
         shell: cmd
 
-      - name: Install Xunit Test Logger
-        run: dotnet add package XunitXml.TestLogger
-        shell: cmd
-
       - name: Run Unit Tests
-        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "xunit;LogFileName=unit-test-results.xml"
+        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "trx;LogFileName=test-results.xml"
         shell: cmd
       
       - name: Publish Test Results
