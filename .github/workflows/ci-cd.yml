@@ -12,11 +12,7 @@ jobs:
   unit-tests:
     name: Run Unit Tests
     runs-on: self-hosted
-
-    # env: # 设置代理环境变量
-    #   http_proxy: http://101.231.121.17:443
-    #   https_proxy: http://101.231.121.17:443
-    #   no_proxy: localhost,10.*.*.*,192.168.*.*,github.schneider-electric.com
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -25,19 +21,51 @@ jobs:
         run: dotnet restore UnitTest/UnitTest.csproj
         shell: cmd
 
-      - name: Run Unit Tests
-        run: dotnet test UnitTest/UnitTest.csproj --no-build --verbosity normal --logger "trx;LogFileName=test-results.xml"
+      - name: Run unit tests
+        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx"
         shell: cmd
-      
-        # EnricoMi/publish-unit-test-result-action/windows@30eadd5010312f995f0d3b3cff7fe2984f69409e
-        # EnricoMi/publish-unit-test-result-action/windows@283dea176069279a9076e77b548668a8e4f0c31b
-        # EnricoMi/publish-unit-test-result-action@283dea176069279a9076e77b548668a8e4f0c31b
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/windows@283dea176069279a9076e77b548668a8e4f0c31b
-        if: always()
+
+      - name: Upload test results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            test-results/**/*.xml
+          name: test-results
+          path: test-results.trx
+
+  test-report:
+    name: Generate Test Report
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate test report
+        uses: dorny/test-reporter@v2
+        with:
+          artifact: test-results
+          name: Unit Test Report
+          path: 'test-results.trx'
+          reporter: dotnet-trx
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   unit-tests:
+#     name: Run Unit Tests
+#     runs-on: self-hosted
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Restore dependencies
+#         run: dotnet restore UnitTest/UnitTest.csproj
+#         shell: cmd
 
   # performance-tests:
   #   name: Run Performance Tests
