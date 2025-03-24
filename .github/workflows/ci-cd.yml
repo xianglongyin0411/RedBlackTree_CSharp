@@ -13,6 +13,10 @@ jobs:
     name: Run Unit Tests
     runs-on: self-hosted
 
+    env: # 设置代理环境变量
+      http_proxy: http://101.231.121.17:443
+      https_proxy: http://101.231.121.17:443
+      no_proxy: localhost,10.*.*.*,192.168.*.*,github.schneider-electric.com
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,7 +30,8 @@ jobs:
         shell: cmd
       
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/windows@30eadd5010312f995f0d3b3cff7fe2984f69409e
+        uses: EnricoMi/publish-unit-test-result-action@283dea176069279a9076e77b548668a8e4f0c31b
+        # EnricoMi/publish-unit-test-result-action@283dea176069279a9076e77b548668a8e4f0c31b
         if: always()
         with:
           files: |
