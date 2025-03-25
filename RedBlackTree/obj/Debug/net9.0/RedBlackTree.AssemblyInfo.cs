@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RedBlackTree")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5aa92966485f420c920fa813e7e6b8df0b098cef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eccd54dd458b473a8c209013f0dedb5a1b6efb3a")]
 [assembly: System.Reflection.AssemblyProductAttribute("RedBlackTree")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RedBlackTree")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
