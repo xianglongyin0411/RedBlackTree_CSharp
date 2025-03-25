@@ -22,7 +22,7 @@ jobs:
         shell: cmd
 
       - name: Run unit tests
-        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=UnitTest/TestResults/test-results.trx"
+        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx"
         shell: cmd
 
       - name: Upload test results
