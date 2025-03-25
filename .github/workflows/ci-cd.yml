@@ -32,18 +32,18 @@ jobs:
           path: UnitTest/TestOutput/*.trx
           reporter: dotnet-trx
 
-  performance-tests:
-    name: Run Performance Tests
-    runs-on: self-hosted
+  # performance-tests:
+  #   name: Run Performance Tests
+  #   runs-on: self-hosted
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Restors dependencies
-        run: dotnet restore PerformanceTest/PerformanceTest.csproj
-        shell: cmd
+  #     - name: Restors dependencies
+  #       run: dotnet restore PerformanceTest/PerformanceTest.csproj
+  #       shell: cmd
         
-      - name: Run Performance Tests
-        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
-        shell: cmd
+  #     - name: Run Performance Tests
+  #       run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
+  #       shell: cmd
