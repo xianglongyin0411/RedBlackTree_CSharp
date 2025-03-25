@@ -69,10 +69,7 @@ jobs:
         shell: cmd
 
       - name: Run unit tests
-        run: |
-          dotnet test UnitTest/UnitTest.csproj ^
-          --logger "trx;LogFileName=test-results.trx" ^  # Windows 换行符
-          --results-directory UnitTest/TestOutput  # 固定 TRX 父目录，避免随机文件夹
+        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx" --results-directory UnitTest/TestOutput  # 固定 TRX 父目录，避免随机文件夹
         shell: cmd
 
       - name: Upload test results
