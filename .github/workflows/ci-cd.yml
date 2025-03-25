@@ -49,3 +49,25 @@ jobs:
           name: Unit Test Report
           path: test-results/test-results.trx
           reporter: dotnet-trx
+
+  performance-tests:
+    name: Run Performance Tests
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Restore dependencies
+        run: dotnet restore PerformanceTests/PerformanceTests.csproj
+        shell: cmd
+
+      - name: Run performance tests
+        run: dotnet test PerformanceTests/PerformanceTests.csproj --logger "trx;LogFileName=performance-results.trx" --results-directory PerformanceTests/TestOutput
+        shell: cmd
+
+      - name: Upload performance test results
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: performance-results
+          path: PerformanceTests/TestOutput/performance-results.trx
