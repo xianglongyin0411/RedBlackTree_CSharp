@@ -27,23 +27,24 @@ jobs:
 
       - name: Generate test report
         uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
+        if: success() || failure()
         with:
           name: Unit Test Report
           path: UnitTest/TestOutput/*.trx
           reporter: dotnet-trx
 
-  # performance-tests:
-  #   name: Run Performance Tests
-  #   runs-on: self-hosted
+  performance-tests:
+    name: Run Performance Tests
+    runs-on: self-hosted
 
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  #     - name: Restors dependencies
-  #       run: dotnet restore PerformanceTest/PerformanceTest.csproj
-  #       shell: cmd
+      - name: Restors dependencies
+        run: dotnet restore PerformanceTest/PerformanceTest.csproj
+        shell: cmd
         
-  #     - name: Run Performance Tests
-  #       run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
-  #       shell: cmd
+      - name: Run Performance Tests
+        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
+        shell: cmd
