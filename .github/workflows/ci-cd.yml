@@ -1,3 +1,50 @@
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   unit-tests:
+#     name: Run Unit Tests
+#     runs-on: self-hosted
+    
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Restore dependencies
+#         run: dotnet restore UnitTest/UnitTest.csproj
+#         shell: cmd
+
+#       - name: Run unit tests
+#         run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx"
+#         shell: cmd
+
+#       - name: Upload test results
+#         if: success() || failure()
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: test-results
+#           path: UnitTest/TestResults/*.trx
+
+#   test-report:
+#     name: Generate Test Report
+#     needs: unit-tests
+#     runs-on: self-hosted
+#     steps:
+#       - name: Generate test report
+#         uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
+#         with:
+#           artifact: test-results
+#           name: Unit Test Report
+#           path: test-results/TestResults/*/test-results.trx
+#           reporter: dotnet-trx
+
 name: CI Pipeline
 
 on:
@@ -22,7 +69,10 @@ jobs:
         shell: cmd
 
       - name: Run unit tests
-        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx"
+        run: |
+          dotnet test UnitTest/UnitTest.csproj ^
+          --logger "trx;LogFileName=test-results.trx" ^  # Windows 换行符
+          --results-directory UnitTest/TestOutput  # 固定 TRX 父目录，避免随机文件夹
         shell: cmd
 
       - name: Upload test results
@@ -30,17 +80,22 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: UnitTest/TestResults/*.trx
+          path: UnitTest/TestOutput/test-results.trx  # 直接指定固定路径的文件
 
   test-report:
     name: Generate Test Report
     needs: unit-tests
     runs-on: self-hosted
     steps:
+      - name: Download test results artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-results
+          path: test-results  # 解压到当前目录的 test-results 文件夹
+
       - name: Generate test report
         uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
         with:
-          artifact: test-results
-          name: Unit Test Report
-          path: test-results/TestResults/*/test-results.trx  # 匹配随机文件夹下的目标文件
+          # 直接指向解压后的文件（固定路径，无随机文件夹）
+          path: test-results/test-results.trx
           reporter: dotnet-trx
