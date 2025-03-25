@@ -15,22 +15,25 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Restore dependencies
         run: dotnet restore UnitTest/UnitTest.csproj
         shell: cmd
 
-      - name: Run unit tests
-        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx"
+      - name: Run unit tests（显式指定结果路径）
+        run: |
+          dotnet test UnitTest/UnitTest.csproj ^
+          --logger "trx;LogFileName=test-results.trx" ^  # 指定文件名
+          --results-directory ./_TestResults  # 输出到根目录的统一文件夹
         shell: cmd
 
-      - name: Upload test results
+      - name: Upload test results（简化路径）
         if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
-          path: UnitTest/TestResults/*.trx
+          path: ./_TestResults/*.trx  # 直接上传根目录下的文件
 
   test-report:
     name: Generate Test Report
@@ -42,49 +45,11 @@ jobs:
         with:
           name: test-results
 
-      # dorny/test-reporter@afe6793191b75b608954023a46831a3fe10048d4
-      - name: Generate test report
-        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
+      - name: Generate test report（修正路径）
+        uses: dorny/test-reporter@v2.1.0  # 推荐使用稳定版本
         with:
-          artifact: test-results
+          artifact: test-results  # 自动匹配下载的文件夹
           name: Unit Test Report
-          path: UnitTest/TestResults/*.trx
+          # 直接指向下载后的文件（无需原始目录）
+          path: test-results/*.trx 
           reporter: dotnet-trx
-# name: CI Pipeline
-
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
-
-# jobs:
-#   unit-tests:
-#     name: Run Unit Tests
-#     runs-on: self-hosted
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       - name: Restore dependencies
-#         run: dotnet restore UnitTest/UnitTest.csproj
-#         shell: cmd
-
-  # performance-tests:
-  #   name: Run Performance Tests
-  #   runs-on: self-hosted
-
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-
-  #     - name: Restors dependencies
-  #       run: dotnet restore PerformanceTest/PerformanceTest.csproj
-  #       shell: cmd
-        
-  #     - name: Run Performance Tests
-  #       run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
-  #       shell: cmd
