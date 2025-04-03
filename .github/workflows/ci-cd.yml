@@ -10,6 +10,10 @@ on:
 
 jobs:
   unit-tests:
+    env:
+        http_proxy: http://101.231.121.17:443
+        https_proxy: http://101.231.121.17:443
+        no_proxy: localhost,10.*.*.*,192.168.*.*,github.schneider-electric.com
     name: Run Unit Tests
     runs-on: self-hosted
     
