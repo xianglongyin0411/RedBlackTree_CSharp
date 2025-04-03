@@ -39,7 +39,7 @@ jobs:
 
   performance-tests:
     name: Run Performance Tests
-    runs-on: self-hosted
+    runs-on: Runner-tree1
 
     steps:
       - name: Checkout code
