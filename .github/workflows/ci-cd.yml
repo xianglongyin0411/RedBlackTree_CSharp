@@ -1,54 +1,32 @@
-name: CI Pipeline
+name: 双语言问候验证
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      lang:
+        description: "选择语言"
+        required: true
+        type: choice
+        options:
+          - English
+          - Chinese
 
 jobs:
-  unit-tests:
-    # env:
-    #     http_proxy: http://101.231.121.17:443
-    #     https_proxy: http://101.231.121.17:443
-    #     no_proxy: localhost,10.*.*.*,192.168.*.*,github.schneider-electric.com
-    name: Run Unit Tests
-    runs-on: Runner-tree1
-    
+  greet:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Restore dependencies
-        run: dotnet restore UnitTest/UnitTest.csproj
-        shell: cmd
-
-      - name: Run unit tests
-        run: dotnet test UnitTest/UnitTest.csproj --logger "trx;LogFileName=test-results.trx" --results-directory UnitTest/TestOutput  # 固定 TRX 父目录，避免随机文件夹
-        shell: cmd
-
-      - name: Generate test report
-        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
-        if: success() || failure()
-        with:
-          name: Unit Test Report
-          path: UnitTest/TestOutput/*.trx
-          reporter: dotnet-trx
-
-  performance-tests:
-    name: Run Performance Tests
-    runs-on: Runner-tree1
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Restors dependencies
-        run: dotnet restore PerformanceTest/PerformanceTest.csproj
-        shell: cmd
-        
-      - name: Run Performance Tests
-        run: dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release
-        shell: cmd
+      - name: 🌍 选择的语言：${{ github.event.inputs.lang }}
+        run: |
+          echo "------------------------"
+          echo "▶ 你选择了：${{ github.event.inputs.lang }}"
+          echo "------------------------"
+          # 根据选择输出不同内容
+          echo "$(
+            if [ '${{ github.event.inputs.lang }}' == 'English' ]; then
+              echo 'Hello, World!'
+            else
+              echo '你好，世界！'
+            fi
+          )"
+          echo "------------------------"
+          echo "✅ 执行时间：$(date +'%Y-%m-%d %H:%M:%S')"
