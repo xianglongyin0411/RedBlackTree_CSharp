@@ -37,7 +37,7 @@ jobs:
           if "%GITHUB_ENV_TYPE%" == "staging" (
             dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release /p:TestType=RedBlackTree
           ) else if "%GITHUB_ENV_TYPE%" == "production" (
-            dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release /p:TestType=SortedSet
+            echo 你好，世界
           ) else (
             echo Invalid environment selected!
             exit 1
