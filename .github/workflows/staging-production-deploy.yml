@@ -1,4 +1,4 @@
-name: enter_label
+name: MainTest
 
 on:
   workflow_dispatch:
@@ -7,9 +7,9 @@ on:
         description: "Specify a version"
         required: false
       ref:
-        description: "Branch, tag or hash (default: develop)"
+        description: "Branch, tag or hash (default: main)"
         required: false
-        default: "develop"
+        default: "main"
       type:
         description: "Select the deployment environment"
         required: false
@@ -21,7 +21,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: myrunner1
+    runs-on: windows-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -29,12 +29,15 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
+      - name: Restore dependencies
+        run: dotnet restore UnitTest/UnitTest.csproj
+
       - name: Run Deployment Script
         run: |
           if "%{{ github.event.inputs.type }}" == "staging" (
-            call Do-Confuser_Setup_Staging.bat staging
+            dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release /p:TestType=RedBlackTree
           ) else if "%{{ github.event.inputs.type }}" == "production" (
-            call Do-Confuser_Setup_Production.bat
+            dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release /p:TestType=SortedSet
           ) else (
             echo Invalid environment selected!
             exit 1

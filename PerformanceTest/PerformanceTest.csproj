@@ -13,4 +13,9 @@
     <ProjectReference Include="..\RedBlackTree\RedBlackTree.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DefineConstants Condition="'$(TestType)' == 'RedBlackTree'">REDBLACKTREE_TEST</DefineConstants>
+    <DefineConstants Condition="'$(TestType)' == 'SortedSet'">SORTEDSET_TEST</DefineConstants>
+  </PropertyGroup>
+  
 </Project>
