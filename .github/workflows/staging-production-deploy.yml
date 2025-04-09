@@ -1,59 +1,42 @@
-name: Staging-Production-Deploy
+name: enter_label
 
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      version:
+        description: "Specify a version"
+        required: false
+      ref:
+        description: "Branch, tag or hash (default: develop)"
+        required: false
+        default: "develop"
+      type:
         description: "Select the deployment environment"
-        required: true
+        required: false
         default: 'staging'
         type: choice
         options:
           - staging
           - production
 
-
 jobs:
-  build-test-deploy:
-    name: Deploy to Selected Environment
-    runs-on: ubuntu-latest
-
+  build-test:
+    runs-on: myrunner1
     steps:
-      # 1. 检出代码
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
+        id: checkout
+        with:
+          ref: ${{ inputs.ref }}
 
-      # 2. 恢复依赖项
-      - name: Restore dependencies
-        run: dotnet restore EcorealC4C.sln
-        shell: cmd
-
-      # 3. 编译代码
-      - name: Build solution
-        run: dotnet build EcorealC4C.sln --configuration Release --no-restore
-        shell: cmd
-
-      # 4. 运行单元测试
-      - name: Run Unit Tests
-        run: dotnet test EcorealC4C.sln --configuration Release --no-build 
-        shell: cmd
-        continue-on-error: true
-
-      # 6. 根据输入参数运行对应的脚本
       - name: Run Deployment Script
         run: |
-          if [ "${{ github.event.inputs.environment }}" == "staging" ]; then
+          if "%{{ github.event.inputs.type }}" == "staging" (
             call Do-Confuser_Setup_Staging.bat staging
-          elif [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          ) else if "%{{ github.event.inputs.type }}" == "production" (
             call Do-Confuser_Setup_Production.bat
-          else
-            echo "Invalid environment selected!"
+          ) else (
+            echo Invalid environment selected!
             exit 1
+          )
         shell: cmd
-
-      # 7. 上传生成的安装包
-      - name: Upload Installer
-        uses: actions/upload-artifact@v3
-        with:
-          name: installer
-          path: artifacts/out/*.exe
