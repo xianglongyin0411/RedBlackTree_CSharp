@@ -34,12 +34,14 @@ jobs:
 
       - name: Run Deployment Script
         run: |
-          if "%{{ github.event.inputs.type }}" == "staging" (
+          if "%GITHUB_ENV_TYPE%" == "staging" (
             dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release /p:TestType=RedBlackTree
-          ) else if "%{{ github.event.inputs.type }}" == "production" (
+          ) else if "%GITHUB_ENV_TYPE%" == "production" (
             dotnet run --project PerformanceTest/PerformanceTest.csproj --configuration Release /p:TestType=SortedSet
           ) else (
             echo Invalid environment selected!
             exit 1
           )
         shell: cmd
+        env:
+          GITHUB_ENV_TYPE: ${{ inputs.type }}
